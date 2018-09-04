@@ -12,43 +12,44 @@ const resolvePostfix = (input) => {
       // console.log(x);
       if (isNumber.test(x)) {
         // console.log('isNumber', x);
-        stack.push(x);
+        stack.push(Number(x));
       }
       if (isOperator.includes(x)) {
-				// console.log('isOperator', x);
-        // if (stack.length === 0) { //remove this if statment
-				// 	stack.push(x);
-				// } else {
-          let b = stack.pop();
-          let a = stack.pop();
-          // let operation = [a, x, b].join('');
-          // let result = eval(operation); //evaluate a string
-          let result;
-          if(isOperator === '+') {
-            result = a + b;
-          }
-          stack.push(result);
-        // }
+        // console.log('isOperator', x);
+
+        if (stack.length === 0)  return null;
+
+        let b = Number(stack.pop());
+        let a = Number(stack.pop());
+        let calculation;
+        if(x === '+') {
+          calculation = a + b;
+        }
+        else if(x === '-') {
+          calculation = a - b;
+        }
+        else if(x === '/') {
+          calculation = a / b;
+        }
+        else {
+          calculation = a * b;
+        }
+        stack.push(calculation);
+
       }
-      // if (isCoordenates.test(x)) { // do this later
-      //   // console.log('isCoordenates', x, isCoordenates.test(x));
-      //   stack.push(resolvePostfix(' '));
-      // }
+      if (isCoordenates.test(x)) { // do this later
+        // console.log('isCoordenates', x, isCoordenates.test(x));
+        // stack.push(resolvePostfix(x));
+      }
       // console.log('stack', stack);
     })
 
-  const result = stack.pop();
-
-  if (stack.length !== 1 ||  typeof result !== Number) {
+    if (stack.length === 1) return stack.pop();
     return "ERR!";
-  }
-
-  return result;
-
 }
 
-const cordinates =
-
+const numberToLetter = (n) => String.fromCharCode(65 + n);
+// const letterToNumber = (s) => s.toLowerCase().charCodeAt(0) - 97 + 1;
 
 // Multi-dimensional arrays
 const rpn = (csv) => {
@@ -57,42 +58,22 @@ const rpn = (csv) => {
   let column = rows[0].split(",");
 
   for(let i = 0; i < rows.length ; i++) {
-	  let obj = {};
-	  let currentline = rows[i].split(",");
-    console.log('currentline', currentline);
+    let currentline = rows[i].split(",");
+
 	  for(let j = 0; j < column.length ; j++) {
-      console.log(i, j, currentline[j]);
-		  // obj[column[j]] = currentline[j];
-	  }
-	  result.push(obj);
+      let columnName = numberToLetter(j) + i.toString();
+		  result[columnName] = currentline[j];
+    }
   }
-  console.log(result);
-  // return JSON.stringify(result); //JSON
+  const isCoordenates = new RegExp('^[a-zA-Z]+[0-9]+$');
 
-  // let newArray = []
-  // csvStr
-  //   .split(',')
-  //   .forEach((x, i) => {
-  //       let column = {};
-  //       let name = 'c' + i;
-  //       column[name] = x;
-  //       newArray.push(column);
-  //     });
-
-
-
-  // console.log(newArray);
-  // let result = newArray
-  //   .forEach(x => {
-  //     console.log(typeof x, x);
-  //   });
-  // console.log(result);
-  // return result;
+  console.log('result', result);
+  result.forEach(x => console.log('forEach', x))
 
 }
 
-const letterToNumber = (s) => s.toLowerCase().charCodeAt(0) - 97 + 1;
-// letterToNumber('z');
+// console.log('numberToLetter', numberToLetter(25));
+// console.log('letterToNumber', letterToNumber('z'));
 
 module.exports = {
 	resolvePostfix,
