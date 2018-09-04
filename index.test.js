@@ -1,11 +1,10 @@
 const {
   describe,
   it,
-  expect,
-  matchers 
+  expect
 } = require('./test/index');
 
-const { resolvePostfix, rpn } = require('./index');
+const { resolvePostfix } = require('./index');
 
 
 describe('Resolve Postfix Notation tests', () => {
@@ -40,17 +39,17 @@ describe('Resolve Postfix Notation tests', () => {
     const result = resolvePostfix('+');
     expect(result).toBe('ERR!');
   })
-  // it('with one cordinate', () => {
-  //   expect(resolvePostfix('c2 3 * ')).toBe(0);
-  // })
-})
-
-describe('Reverse Polish Notation test', () => {
-  it('First Test', () => {
-    const restult = rpn('b1 b2 +,2 b2 3 * -, ,+\na1     ,5         , ,7 2 /\nc2 3 * ,1 2       , ,5 1 2 + 4 * + 3 -');
-    expect(result).toBe('-8,-13,ERR!,ERR!', '-8,5,ERR!,3.5', 'ERR!,ERR!,ERR!,14');
+  it('with one cordinate', () => {
+    expect(resolvePostfix('c2 3 * ')).toBe(0);
   })
 })
+
+// describe('Reverse Polish Notation test', () => {
+//   it('First Test', () => {
+//     const restult = rpn('b1 b2 +,2 b2 3 * -, ,+\na1     ,5         , ,7 2 /\nc2 3 * ,1 2       , ,5 1 2 + 4 * + 3 -');
+//     expect(result).toBe('-8,-13,ERR!,ERR!', '-8,5,ERR!,3.5', 'ERR!,ERR!,ERR!,14');
+//   })
+// })
 
 
 // function adder(a, b) {

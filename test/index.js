@@ -1,18 +1,24 @@
 const describe = (desc, fn) => {
   console.log(desc)
-  fn()
+  try {
+    fn()
+  } catch(error) {
+    process.exit(1)
+  }
+
 }
 
 const it = (msg, fn) => describe('  ' + msg, fn)
 
+let pass = true
 const matchers = (exp) => ({
   toBe: (assertion) => {
     if (exp === assertion) {
       console.log('✅   Pass')
-      return true
     } else {
       console.log('❌   Fail')
-      return false
+      throw Error('❌   Fail Now')
+      pass = false
     }
   }
 })

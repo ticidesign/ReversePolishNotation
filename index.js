@@ -9,39 +9,45 @@ const resolvePostfix = (input) => {
     .replace(/\s\s+/g, ' ') //replace all space by single space
     .split(' ')
     .forEach(x => {
-      console.log(x);
+      // console.log(x);
       if (isNumber.test(x)) {
         // console.log('isNumber', x);
         stack.push(x);
       }
       if (isOperator.includes(x)) {
 				// console.log('isOperator', x);
-        if (stack.length === 0) {
-					stack.push(x);
-				} else {
+        // if (stack.length === 0) { //remove this if statment
+				// 	stack.push(x);
+				// } else {
           let b = stack.pop();
           let a = stack.pop();
-          let operation = [a, x, b].join('');
-          let result = eval(operation); //evaluate a string
+          // let operation = [a, x, b].join('');
+          // let result = eval(operation); //evaluate a string
+          let result;
+          if(isOperator === '+') {
+            result = a + b;
+          }
           stack.push(result);
-        }
+        // }
       }
-      if (isCoordenates.test(x)) {
-        // console.log('isCoordenates', x, isCoordenates.test(x));
-        stack.push(resolvePostfix(' '));
-      }
-      console.log('stack', stack);
+      // if (isCoordenates.test(x)) { // do this later
+      //   // console.log('isCoordenates', x, isCoordenates.test(x));
+      //   stack.push(resolvePostfix(' '));
+      // }
+      // console.log('stack', stack);
     })
 
-	if(stack.length === 0 
-		|| stack.length > 1 
-		|| typeof stack[0] !== Number
-	) { //check if it's number and just one item
-      return "ERR!";
-  } else {
-    return Number(stack.pop());
+  const result = stack.pop();
+
+  if (stack.length !== 1 ||  typeof result !== Number) {
+    return "ERR!";
   }
+
+  return result;
+
 }
+
+const cordinates =
 
 
 // Multi-dimensional arrays
@@ -82,7 +88,7 @@ const rpn = (csv) => {
   //   });
   // console.log(result);
   // return result;
-  
+
 }
 
 const letterToNumber = (s) => s.toLowerCase().charCodeAt(0) - 97 + 1;
