@@ -1,4 +1,3 @@
-
 const resolvePostfix = (input) => {
   const isOperator = ['+', '-', '/', '*'];
   const isNumber = new RegExp('^[0-9]+$');
@@ -8,27 +7,27 @@ const resolvePostfix = (input) => {
   input
     .replace(/\s\s+/g, ' ') //replace all space by single space
     .split(' ')
-    .forEach(x => {
-      // console.log(x);
-      if (isNumber.test(x)) {
-        // console.log('isNumber', x);
-        stack.push(Number(x));
+    .forEach(item => {
+      // console.log(item);
+      if (isNumber.test(item)) {
+        // console.log('isNumber', item);
+        stack.push(Number(item));
       }
-      if (isOperator.includes(x)) {
-        // console.log('isOperator', x);
+      if (isOperator.includes(item)) {
+        // console.log('isOperator', item);
 
         if (stack.length === 0)  return null;
 
         let b = Number(stack.pop());
         let a = Number(stack.pop());
         let calculation;
-        if(x === '+') {
+        if(item === '+') {
           calculation = a + b;
         }
-        else if(x === '-') {
+        else if(item === '-') {
           calculation = a - b;
         }
-        else if(x === '/') {
+        else if(item === '/') {
           calculation = a / b;
         }
         else {
@@ -37,9 +36,9 @@ const resolvePostfix = (input) => {
         stack.push(calculation);
 
       }
-      if (isCoordenates.test(x)) { // do this later
-        // console.log('isCoordenates', x, isCoordenates.test(x));
-        // stack.push(resolvePostfix(x));
+      if (isCoordenates.test(item)) {
+        console.log(item);
+        // stack.push(resolvePostfix(item));
       }
       // console.log('stack', stack);
     })
@@ -48,36 +47,43 @@ const resolvePostfix = (input) => {
     return "ERR!";
 }
 
-const numberToLetter = (n) => String.fromCharCode(65 + n);
+const makeCoordinates = ( csv ) => {
+  const result = {};
+
+  csv
+    .split('\n')
+    .map( (line, i) => {
+      line
+        .split(',')
+        .map( (cell, j) => {
+          result[`${numberToLetter(j)}${i + 1}`] = cell;
+      });
+  });
+
+  return result;
+};
+
+const numberToLetter = (n) => String.fromCharCode(65 + n).toUpperCase();
 // const letterToNumber = (s) => s.toLowerCase().charCodeAt(0) - 97 + 1;
 
 // Multi-dimensional arrays
 const rpn = (csv) => {
   let result = [];
-  let rows = csv.split("\n");
-  let column = rows[0].split(",");
-
-  for(let i = 0; i < rows.length ; i++) {
-    let currentline = rows[i].split(",");
-
-	  for(let j = 0; j < column.length ; j++) {
-      let columnName = numberToLetter(j) + i.toString();
-		  result[columnName] = currentline[j];
-    }
-  }
-  const isCoordenates = new RegExp('^[a-zA-Z]+[0-9]+$');
-
+  const COORD = makeCoordinates( csv );
+  Object.keys(COORD).forEach((key) => {
+    // console.log(COORD[key]);
+    result.push(resolvePostfix(COORD[key]));
+  });
   console.log('result', result);
-  result.forEach(x => console.log('forEach', x))
-
+  return result;
 }
 
-// console.log('numberToLetter', numberToLetter(25));
-// console.log('letterToNumber', letterToNumber('z'));
+rpn('b1 b2 +,2 b2 3 * -, ,+\na1     ,5         , ,7 2 /\nc2 3 * ,1 2       , ,5 1 2 + 4 * + 3 -');
 
 module.exports = {
 	resolvePostfix,
-	rpn
+  rpn,
+  makeCoordinates,
 }
 
 

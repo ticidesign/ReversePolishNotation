@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -w"
+    "test": "jest",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "jest": "^23.6.0"
   }
 }
