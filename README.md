@@ -11,7 +11,23 @@
 - cells that generate an error will print `ERR!` but all other cells still do the deed
 - the app should print the output to stdout (no need to save new file)
 
-## Example:
+
+To get started, install the required packages.
+
+```
+yarn
+yarn start
+```
+
+## Test driven development
+
+A collection of unit tests have been provided. To run the tests, run
+
+```
+yarn test
+```
+
+## Example
 
 Input
 ```
