@@ -14,20 +14,23 @@ const isCoordenates = (item) => {
 }
 
 const resolvePostfix = (input, address, COORD, stacktrace = []) => {
-
   if (!input) return 'ERR!';
 
   const stack = [];
-
-  // Creating a stack tracing to avoid infinite loop
-  // if (stacktrace.includes(address)) return "ERR!";
-  // stacktrace.push(address);
 
   input
     .replace(/\s\s+/g, ' ') //replace all space by single space
     .split(' ')
     .forEach(item => {
+
       if (isCoordenates(item)) {
+        // Creating a stack tracing to avoid infinite loop
+        if (stacktrace.includes(address)) {
+          console.log(stacktrace, address);
+          return "ERR!"
+        };
+        stacktrace.push(address);
+
         const solution = resolvePostfix(COORD[item], item, COORD, stacktrace);
         stack.push(solution);
       }

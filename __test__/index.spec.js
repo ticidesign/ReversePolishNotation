@@ -127,7 +127,7 @@ test('makeCoordinates - Should give us the right coordinates', () => {
   expect( makeCoordinates( input )).toMatchObject(output );
 });
 
-test('RPN function', () => {
+test.only('RPN function', () => {
   // const COORD = {
   //   a1: 'b1 b2 +', //-8
   //   b1: '2 b2 3 * -', //-13
@@ -151,12 +151,12 @@ test('RPN function', () => {
   expect(rpn(input)).toBe(output);
 })
 
-// test('avoid infinite loops', () => {
-//   const input = '7, c2 40 +, +\n' +
-//                 'b1, a2 72 /, b3\n' +
-//                 '50, b2 7 8 + +, 8 +';
-//   const output = '7,ERR!,ERR!\n' +
-//                 'ERR!,ERR!,ERR!\n' +
-//                 '50,ERR!,ERR!';
-//   expect(rpn(input)).toBe(output);
-// })
+test('avoid infinite loops', () => {
+  const input = '7, c2 40 +, +\n' +
+                'b1, a2 72 /, b3\n' +
+                '50, b2 7 8 + +, 8 +';
+  const output = '7,ERR!,ERR!\n' +
+                'ERR!,ERR!,ERR!\n' +
+                '50,ERR!,ERR!';
+  expect(rpn(input)).toBe(output);
+})
