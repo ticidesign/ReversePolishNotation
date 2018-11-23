@@ -1,5 +1,22 @@
 # Reverse Polish notation
 
+Reverse Polish notation (RPN), also known as Polish postfix notation or simply postfix notation, is a mathematical notation in which operators follow their operands. It does not need any parentheses as long as each operator has a fixed number of operands. The description "Polish" refers to the nationality of logician [Jan Łukasiewicz](https://en.wikipedia.org/wiki/Jan_%C5%81ukasiewicz), who invented this notation in 1924.
+
+Postfix evaluation algorithm
+
+```
+for each token in the postfix expression:
+  if token is an operator:
+    operand_2 ← pop from the stack
+    operand_1 ← pop from the stack
+    result ← evaluate token with operand_1 and operand_2
+    push result back onto the stack
+  else if token is an operand:
+    push token onto the stack
+result ← pop from the stack
+```
+
+
 ## List of task for build a csv parser for a spreadsheet:
 
 - write in node and without dependencies

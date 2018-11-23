@@ -1,9 +1,11 @@
-const isOperator = ['+', '-', '/', '*'];
-// const isNumber = new RegExp('^[0-9]+');
-// const isNumber = (item) => {
-//   const regexNumber = new RegExp('^[-]?[0-9]\d*(\.\d+)?$');
-//   return regexNumber.test(item);
+const isOperator = (item) => {
+  const operatorsList = ['+', '-', '/', '*'];
+  return operatorsList.includes(item);
+}
+// const isOperator = {
+//   "+": (c,a) =>
 // }
+
 const isNumber = ( item ) => {
   return ( parseFloat( item ) - parseFloat( item ) + 1 ) === 1 &&
   String( parseFloat( item ) ).length === String( item ).length;
@@ -17,42 +19,38 @@ const resolvePostfix = (input, address, COORD, stacktrace = []) => {
   if (!input) return 'ERR!';
 
   const stack = [];
+  // Creating a stack tracing to avoid infinite loop
+  if (stacktrace.includes(address)) {
+    return "ERR!"
+  };
+  stacktrace.push(address);
 
   input
     .replace(/\s\s+/g, ' ') //replace all space by single space
     .split(' ')
     .forEach(item => {
-
       if (isCoordenates(item)) {
-        // Creating a stack tracing to avoid infinite loop
-        if (stacktrace.includes(address)) {
-          console.log(stacktrace, address);
-          return "ERR!"
-        };
-        stacktrace.push(address);
-
-        const solution = resolvePostfix(COORD[item], item, COORD, stacktrace);
+        const solution = resolvePostfix(COORD[item], item, COORD, [...stacktrace]);
         stack.push(solution);
       }
       if (isNumber(item)) {
         stack.push(parseInt(item));
       }
-      if (isOperator.includes(item)) {
-        // if (stack.length === 0) return null;
-        const b = stack.pop();
-        const a = stack.pop();
+      if (isOperator(item)) {
+        const operandB = stack.pop();
+        const operandA = stack.pop();
         let calculation;
         if(item === '+') {
-          calculation = a + b;
+          calculation = operandA + operandB;
         }
         else if(item === '-') {
-          calculation = a - b;
+          calculation = operandA - operandB;
         }
         else if(item === '/') {
-          calculation = a / b;
+          calculation = operandA / operandB;
         }
         else {
-          calculation = a * b;
+          calculation = operandA * operandB;
         }
 
         if (isNaN(calculation)){
@@ -62,7 +60,7 @@ const resolvePostfix = (input, address, COORD, stacktrace = []) => {
         }
       }
     });
-    // console.log(stack, address, stacktrace);
+
     if (stack.length === 1) return stack.pop();
     return "ERR!";
 };
@@ -87,6 +85,7 @@ const numberToLetter = (n) => String.fromCharCode(65 + n).toLowerCase();
 
 const rpn = (csv) => {
   const COORD = makeCoordinates( csv );
+
   const result = csv
     .split('\n')
     .map( (line, i) => {
@@ -101,20 +100,6 @@ const rpn = (csv) => {
   return result;
 }
 
-const newCoord = { a1: 'b1 b2 +',
-b1: '2 b2 3 * -',
-c1: ' ',
-d1: '+',
-a2: 'a1     ',
-b2: '5         ',
-c2: ' ',
-d2: '7 2 /',
-a3: 'c2 3 * ',
-b3: '1 2       ',
-c3: ' ',
-d3: '5 1 2 + 4 * + 3 -' };
-resolvePostfix('b1 b2 +', 'a1', newCoord)
-
 module.exports = {
 	resolvePostfix,
   rpn,
@@ -123,3 +108,13 @@ module.exports = {
   isNumber,
   isCoordenates,
 }
+
+
+// TODO
+// Refactor code
+// Create CLI Interface with options
+// make it global
+// READEME
+// $ rpn path/to/csv --options
+// flags -d --debug (short and long version)
+// maybe add a --save flag to an output file

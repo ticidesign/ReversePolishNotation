@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "rpn": "bin/index.js"
+  },
   "scripts": {
     "test": "jest --watch",
     "start": "node index.js"
