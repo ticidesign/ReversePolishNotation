@@ -1,8 +1,9 @@
 {
   "name": "reversepolishnotation",
   "version": "1.0.0",
-  "description": "",
+  "description": "Reverse polish notation algorithm",
   "main": "index.js",
+  "author": "Ticiana de Andrade <hello@ticidesign.com>",
   "bin": {
     "rpn": "bin/index.js"
   },
@@ -10,9 +11,11 @@
     "test": "jest --watch",
     "start": "node index.js"
   },
-  "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "clear": "^0.1.0"
+  },
   "devDependencies": {
     "jest": "^23.6.0"
   }

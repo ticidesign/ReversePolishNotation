@@ -1,11 +1,12 @@
-const isOperator = (item) => {
-  const operatorsList = ['+', '-', '/', '*'];
-  return operatorsList.includes(item);
+const operatorList = {
+  "+": (accumulator, currentValue) => currentValue + accumulator,
+  "-": (accumulator, currentValue) => currentValue - accumulator,
+  "/": (accumulator, currentValue) => currentValue / accumulator,
+  "*": (accumulator, currentValue) => currentValue * accumulator,
 }
-// const isOperator = {
-//   "+": (c,a) =>
-// }
-
+const isOperator = (item) => {
+  return Object.keys(operatorList).includes(item);
+}
 const isNumber = ( item ) => {
   return ( parseFloat( item ) - parseFloat( item ) + 1 ) === 1 &&
   String( parseFloat( item ) ).length === String( item ).length;
@@ -39,19 +40,7 @@ const resolvePostfix = (input, address, COORD, stacktrace = []) => {
       if (isOperator(item)) {
         const operandB = stack.pop();
         const operandA = stack.pop();
-        let calculation;
-        if(item === '+') {
-          calculation = operandA + operandB;
-        }
-        else if(item === '-') {
-          calculation = operandA - operandB;
-        }
-        else if(item === '/') {
-          calculation = operandA / operandB;
-        }
-        else {
-          calculation = operandA * operandB;
-        }
+        let calculation = [operandB, operandA].reduce(operatorList[item]);
 
         if (isNaN(calculation)){
           stack.push('ERR!');
