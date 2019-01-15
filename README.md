@@ -36,6 +36,12 @@ yarn
 yarn start
 ```
 
+## Use locally
+
+```
+rpn [path-to-file]
+```
+
 ## Test driven development
 
 A collection of unit tests have been provided. To run the tests, run

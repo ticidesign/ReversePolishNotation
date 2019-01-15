@@ -146,6 +146,12 @@ test('Reverse Polish Notation function', () => {
   expect(rpn(input)).toBe(output);
 })
 
+test('Passing CSV', () => {
+  const input = "b1 b2 +,2 b2 3 * -, ,+\na1     ,5         , ,7 2 /\nc2 3 * ,1 2       , ,5 1 2 + 4 * + 3 -";
+  const output = "-8,-13,ERR!,ERR!\n-8,5,ERR!,3.5\nERR!,ERR!,ERR!,14";
+  expect(rpn(input)).toBe(output);
+})
+
 test('Avoid infinite loops in Reverse Polish Notation function', () => {
   const input = '7, c2 40 +, +\n' +
                 'b1, a2 72 /, b3\n' +

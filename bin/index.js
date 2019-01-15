@@ -2,23 +2,13 @@
 // read a file fn
 // error out if file doesn't exist or there is a error
 const fs = require('fs');
-const chalk = require('chalk');
-const {
-	resolvePostfix,
-  rpn,
-  makeCoordinates,
-  isOperator,
-  isNumber,
-  isCoordenates,
-} = require('../index.js');
-
+const { rpn } = require('../index.js');
 
 const input = process.argv[2];
 // console.log('Argv', process.argv);
-fs.readFile(input, 'utf8', (err, contents) => {
-	if (err) console.log(chalk.red('There is an error in read file'));
-	console.log(JSON.stringify(contents));
-	console.log(rpn(JSON.stringify(contents)));
+fs.readFile(input, 'utf8', (err, data) => {
+  if (err) console.log('There is an error in read file');
+  const result = data.trim();
+	console.log('Input: ', JSON.stringify(result));
+	console.log('Output: ', rpn(result));
 });
-//analise all the arguments comming from the file
-// console.log(rpn(readInput));
