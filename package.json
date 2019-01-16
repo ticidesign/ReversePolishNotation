@@ -1,21 +1,23 @@
 {
-  "name": "reversepolishnotation",
-  "version": "1.0.0",
+  "name": "@tici/rpn",
+  "version": "0.0.1",
   "description": "Reverse polish notation algorithm",
   "main": "index.js",
   "author": "Ticiana de Andrade <hello@ticidesign.com>",
   "bin": {
     "rpn": "bin/index.js"
   },
+  "files": [
+    "index.js",
+    "bin/index.js"
+  ],
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "start": "node index.js"
   },
-  "license": "ISC",
-  "dependencies": {
-    "chalk": "^2.4.1",
-    "clear": "^0.1.0"
-  },
+  "license": "GPL-3.0-or-later",
+  "dependencies": {},
   "devDependencies": {
     "jest": "^23.6.0"
   }
